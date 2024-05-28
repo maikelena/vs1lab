@@ -29,15 +29,15 @@ class LocationHelper {
         return this.#longitude;
     }
 
-   /**
-    * Create LocationHelper instance if coordinates are known.
-    * @param {string} latitude 
-    * @param {string} longitude 
-    */
-   constructor(latitude, longitude) {
-       this.#latitude = (parseFloat(latitude)).toFixed(5);
-       this.#longitude = (parseFloat(longitude)).toFixed(5);
-   }
+    /**
+     * Create LocationHelper instance if coordinates are known.
+     * @param {string} latitude 
+     * @param {string} longitude 
+     */
+    constructor(latitude, longitude) {
+        this.#latitude = (parseFloat(latitude)).toFixed(5);
+        this.#longitude = (parseFloat(longitude)).toFixed(5);
+    }
 
     /**
      * The 'findLocation' method requests the current location details through the geolocation API.
@@ -62,7 +62,7 @@ class LocationHelper {
             // Pass the locationHelper object to the callback.
             callback(helper);
         }, (error) => {
-           alert(error.message)
+            alert(error.message)
         });
     }
 }
@@ -87,7 +87,8 @@ class MapManager {
         var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
         L.tileLayer(
             'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; ' + mapLink + ' Contributors'}).addTo(this.#map);
+            attribution: '&copy; ' + mapLink + ' Contributors'
+        }).addTo(this.#map);
         this.#markers = L.layerGroup().addTo(this.#map);
     }
 
@@ -104,9 +105,9 @@ class MapManager {
             .bindPopup("Your Location")
             .addTo(this.#markers);
         for (const tag of tags) {
-            L.marker([tag.location.latitude,tag.location.longitude])
+            L.marker([tag.location.latitude, tag.location.longitude])
                 .bindPopup(tag.name)
-                .addTo(this.#markers);  
+                .addTo(this.#markers);
         }
     }
 }
@@ -117,8 +118,33 @@ class MapManager {
  * It is called once the page has been fully loaded.
  */
 // ... your code here ...
+function updateLocation() {
 
+    const locations = function (location) {
+        const longitude = location.longitude;
+        const latitude = location.latitude;
+
+        document.getElementById("LatTagging").setAttribute("value", latitude);
+        document.getElementById("LongTagging").setAttribute("value", longitude);
+        document.getElementById("LatDiscovery").setAttribute("value", latitude);
+        document.getElementById("LongDiscovery").setAttribute("value", longitude);
+
+        //Aufgabe 2:
+
+        let map = new MapManager();
+        map.initMap(latitude, longitude);
+        map.updateMarkers(latitude, longitude, []);
+
+        document.getElementById("mapView").remove();
+        document.getElementById("mapCaption").remove();
+
+    }
+    LocationHelper.findLocation(locations);
+
+
+
+}
 // Wait for the page to fully load its DOM content, then call updateLocation
-document.addEventListener("DOMContentLoaded", () => {
-    alert("Please change the script 'geotagging.js'");
-});
+
+
+document.addEventListener("DOMContentLoaded", updateLocation());

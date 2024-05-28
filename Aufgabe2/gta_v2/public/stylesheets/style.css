@@ -109,6 +109,9 @@ a {
 
 /* ### TODO ### Styles for Header Component */
 /* ... your code here ... */
+#map {
+  height: 500px;
+}
 
 header {
   padding: 15px;
@@ -129,7 +132,6 @@ header {
 
 /* ... your code here ... */
 
-main {}
 
 section {
   padding: 10px;
