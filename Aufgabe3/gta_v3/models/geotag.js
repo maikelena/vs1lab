@@ -12,7 +12,12 @@
 class GeoTag {
 
     // TODO: ... your code here ...
-    
+
+
+
+
+    //Fields from Tagging form: Latitude, Longitutde, Name, Hashtag
+
 }
 
 module.exports = GeoTag;
